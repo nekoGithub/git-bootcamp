@@ -34,7 +34,7 @@ function addTask() {
 
     tasks.push(task);
     input.value = '';
-    
+
     saveTasks();
     renderTasks();
 }
@@ -59,8 +59,14 @@ function renderTasks() {
             <input type="checkbox" 
                    class="task-checkbox" 
                    ${task.completed ? 'checked' : ''} 
-                   onchange="toggleTask(${task.id})">
-            <span class="task-text">${task.text}</span>
+                   onchange="toggleTask(${task.id})">            
+                // Reemplazar por:
+                <span class="task-text">
+                    ${task.text}
+                    <small style="color: #999; font-size: 12px; display: block; margin-top: 5px;">
+                        ${getTimeAgo(task.createdAt)}
+                    </small>
+                </span>
             <button class="delete-btn" onclick="deleteTask(${task.id})">🗑️ Eliminar</button>
         `;
         taskList.appendChild(li);
@@ -91,13 +97,13 @@ function deleteTask(id) {
 // Función para filtrar tareas
 function filterTasks(filter) {
     currentFilter = filter;
-    
+
     // Actualizar botones activos
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.classList.remove('active');
     });
     event.target.classList.add('active');
-    
+
     renderTasks();
 }
 
@@ -116,7 +122,7 @@ function getFilteredTasks() {
 // Limpiar tareas completadas
 function clearCompleted() {
     const completedCount = tasks.filter(t => t.completed).length;
-    
+
     if (completedCount === 0) {
         alert('No hay tareas completadas para eliminar');
         return;
@@ -146,4 +152,18 @@ function loadTasks() {
     if (stored) {
         tasks = JSON.parse(stored);
     }
+}
+// Feature: Contador de tiempo - Developer 2
+function getTimeAgo(dateString) {
+    const now = new Date();
+    const created = new Date(dateString);
+    const diffMs = now - created;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return 'Ahora';
+    if (diffMins < 60) return `Hace ${diffMins} min`;
+    if (diffHours < 24) return `Hace ${diffHours}h`;
+    return `Hace ${diffDays}d`;
 }
