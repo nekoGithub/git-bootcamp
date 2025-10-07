@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App - Bootcamp DevSecOps</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 To-Do App</h1>
+            <p class="subtitle">Bootcamp DevSecOps - Version 1.0.0</p>
+        </header>
+
+        <div class="input-section">
+            <input type="text" id="taskInput" placeholder="Escribe una nueva tarea...">
+            <button id="addBtn" onclick="addTask()">Agregar</button>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterTasks('all')">Todas</button>
+            <button class="filter-btn" onclick="filterTasks('active')">Activas</button>
+            <button class="filter-btn" onclick="filterTasks('completed')">Completadas</button>
+        </div>
+
+        <ul id="taskList" class="task-list"></ul>
+
+        <footer>
+            <p>Tareas pendientes: <span id="taskCount">0</span></p>
+            <button id="clearBtn" onclick="clearCompleted()">Limpiar completadas</button>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
